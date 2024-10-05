@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "AlexandreIzefler.AI.SK.Demos.Demo1": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7118",
+      "launchBrowser": false
+    }
+  }
+}
