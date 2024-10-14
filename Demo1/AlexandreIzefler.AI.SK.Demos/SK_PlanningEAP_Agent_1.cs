@@ -24,7 +24,7 @@ namespace AlexandreIzefler.AI.SK.Demos.Demo1
         }
 
         [Function("SK_PlanningEAP_Agent_1_Http")]
-        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequest req)
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequest req)
         {
             _logger.LogInformation("C# HTTP trigger function iniciando o processamento.");
 
@@ -36,8 +36,11 @@ namespace AlexandreIzefler.AI.SK.Demos.Demo1
 
             var history = new ChatHistory("Como posso ajudá-lo?");
 
-            string? userInput = "Olá quero criar o planejamento de minha obra, pode me ajudar?";
-            history.AddUserMessage(userInput);
+            if (!string.IsNullOrEmpty(req.Form["question"]))
+            {
+                string userInput = req.Form["question"]!;
+                history.AddUserMessage(userInput);
+            }
 
             var result = await chatCompletionService.GetChatMessageContentAsync(
                 history,
